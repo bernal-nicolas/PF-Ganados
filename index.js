@@ -13,6 +13,8 @@ app.get("/", (req,res) => {
 
 const rutasGanado = require("./ganado/ganado.route")
 app.use('/ganado', rutasGanado);
+const rutasRaza = require("./raza/raza.route")
+app.use('/raza', rutasRaza);
 
 mongoose
     .connect(process.env.MONGODB_URI)
