@@ -11,7 +11,7 @@ app.get("/", (req,res) => {
     res.status(200).json({});
 })
 
-const rutasUsuario = require("./ganado/ganado.route")
+const rutasGanado = require("./ganado/ganado.route")
 app.use('/ganado', rutasGanado);
 
 mongoose
@@ -19,4 +19,4 @@ mongoose
     .then(() => console.log("Conectado a MongoDB Atlas"))
     .catch((error) => console.error(error))
 
-app.listen(8080);
+app.listen(8081);
