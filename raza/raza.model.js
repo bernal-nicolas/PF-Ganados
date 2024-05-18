@@ -2,15 +2,14 @@ const mongoose = require("mongoose");
 
 const schemaProducto = new mongoose.Schema({
     userID: {type: String, required: true},
-    razaID: {type: String, required: true},
-    fechaNac: {type: Date, required: true},
-    genero: {type: String, required: true},
+    nombre: {type: String, required: true},
+    // Valores de salud por tipo de raza a determinar...
     isActive: { type: Boolean, required: true, default: true } // Soft Delete
   }, {
     versionKey: false,
     timestamps: true
 });
   
-const Ganado = mongoose.model('Ganado', schemaProducto);
+const Raza = mongoose.model('Raza', schemaProducto);
 
-module.exports = Ganado;
+module.exports = Raza;
