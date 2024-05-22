@@ -7,13 +7,10 @@ const { authenticateToken } = require('../middleware/auth');
 async function GetRazas(req, res) {
     try {
         const resultadosBusqueda = await readRazaConFiltros(req.query);
-
-        res.status(200).json({
-            ...resultadosBusqueda
-        });
+        res.status(200).json(resultadosBusqueda);
     } catch (e) {
-        res.status(500).json({ msg: "" });
-    }
+        respondWithError(res, e);
+    }
 }
 
 async function PostRaza(req, res) {

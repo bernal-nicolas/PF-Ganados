@@ -7,13 +7,10 @@ const {authenticateToken} = require('../middleware/auth');
 async function GetGanados(req, res) {
     try {
         const resultadosBusqueda = await readGanadoConFiltros(req.query);
-
-        res.status(200).json({
-            ...resultadosBusqueda
-        })
-    } catch(e) {
-        res.status(500).json({msg: ""})
-    }
+        res.status(200).json(resultadosBusqueda);
+    } catch (e) {
+        respondWithError(res, e);
+    }
 }
 
 async function PostGanado(req, res) {
