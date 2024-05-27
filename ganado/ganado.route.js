@@ -6,8 +6,8 @@ const { authenticateToken, getTokenID } = require('../middleware/auth');
 
 async function GetGanados(req, res) {
     try {
-        const userID = getTokenID(req);
-        const resultadosBusqueda = await readGanadoConFiltros(req.query, userID);
+        req.query.userID = getTokenID(req)
+        const resultadosBusqueda = await readGanadoConFiltros(req.query);
         res.status(200).json(resultadosBusqueda);
     } catch (e) {
         respondWithError(res, e);
@@ -16,7 +16,7 @@ async function GetGanados(req, res) {
 
 async function PostGanado(req, res) {
     try {
-
+        req.body.userID = getTokenID(req)
         await createGanado(req.body);
         res.status(201).json({ mensaje: "Ganado creado con éxito." });
     } catch (e) {
