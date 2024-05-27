@@ -2,11 +2,12 @@ const express = require('express')
 const router = express.Router();
 const { readGanadoConFiltros, createGanado, updateGanado, deleteGanado } = require("./ganado.controller");
 const { respondWithError } = require('../utils/functions');
-const {authenticateToken} = require('../middleware/auth');
+const { authenticateToken, getTokenID } = require('../middleware/auth');
 
 async function GetGanados(req, res) {
     try {
-        const resultadosBusqueda = await readGanadoConFiltros(req.query);
+        const userID = getTokenID(req);
+        const resultadosBusqueda = await readGanadoConFiltros(req.query, userID);
         res.status(200).json(resultadosBusqueda);
     } catch (e) {
         respondWithError(res, e);

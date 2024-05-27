@@ -1,7 +1,7 @@
 const { createGanadoMongo, getGanadoMongo, updateGanadoMongo, deleteGanadoMongo } = require("./ganado.actions");
 
-async function readGanadoConFiltros(query) {
-    const resultadosBusqueda = await getGanadoMongo(query);
+async function readGanadoConFiltros(query, userID) {
+    const resultadosBusqueda = await getGanadoMongo(query, userID);
     return resultadosBusqueda;
 }
 
