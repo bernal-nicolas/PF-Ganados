@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 const { readRazaConFiltros, createRaza, updateRaza, deleteRaza } = require("./raza.controller");
 const { respondWithError } = require('../utils/functions');
-const { authenticateToken } = require('../middleware/auth');
+const { authenticateToken, getTokenID } = require('../middleware/auth');
 
 async function GetRazas(req, res) {
     try {
+        req.query.userID = getTokenID(req)
         const resultadosBusqueda = await readRazaConFiltros(req.query);
         res.status(200).json(resultadosBusqueda);
     } catch (e) {
@@ -15,6 +16,7 @@ async function GetRazas(req, res) {
 
 async function PostRaza(req, res) {
     try {
+        req.body.userID = getTokenID(req)
         await createRaza(req.body);
         res.status(201).json({ mensaje: "Raza creada con éxito." });
     } catch (e) {
