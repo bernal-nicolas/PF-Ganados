@@ -10,7 +10,11 @@ async function GetGanados(req, res) {
         const resultadosBusqueda = await readGanadoConFiltros(req.query);
         res.status(200).json(resultadosBusqueda);
     } catch (e) {
-        respondWithError(res, e);
+        if (typeof e == "object") {
+          console.log(e);
+        } else {
+          respondWithError(res, e);
+        }
     }
 }
 

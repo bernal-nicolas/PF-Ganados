@@ -1,8 +1,49 @@
 const Ganado = require("./ganado.model")
 
 async function getGanadoMongo(filtros) {
-    filtros.isActive = true;
-    const ganadosFiltrados = await Ganado.find(filtros);
+    userID = filtros.userID
+    delete filtros.userID
+    filtros.isActive = true
+    filtros["razaInfo.userID"] = userID
+    
+    let ganadosFiltrados = await Ganado.aggregate([
+      {
+        $addFields: {
+          razaObjectId: { $toObjectId: "$raza" }
+        }
+      },
+      {
+        $lookup: {
+          from: "razas", // Nombre de la colección Ganado en plural
+          localField: "razaObjectId",
+          foreignField: "_id",
+          as: "razaInfo"
+        }
+      },
+      {
+        $unwind: "$razaInfo"
+      },
+      // Filtrar por userID del usuario proporcionado
+      {
+        $match: filtros
+      },
+      // Select!
+      {
+        $project: {
+          _id: 1,
+          userID: 1,
+          raza: 1,
+          fechaNac: 1,
+          isActive: 1,
+          isActive: 1,
+          createdAt: 1,
+          updatedAt: 1,
+          razaInfo: 1,
+          razaGenero: { $concat: ["$razaInfo.nombreRaza", " ", "$razaInfo.genero"] }
+        }
+      }
+    ])
+
     return ganadosFiltrados;
 }
 
