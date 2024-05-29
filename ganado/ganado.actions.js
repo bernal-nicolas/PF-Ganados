@@ -1,6 +1,7 @@
 const Ganado = require("./ganado.model")
 
 async function getGanadoMongo(filtros) {
+    filtros.isActive = true;
     const ganadosFiltrados = await Ganado.find(filtros);
     return ganadosFiltrados;
 }
